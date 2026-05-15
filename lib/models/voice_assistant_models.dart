@@ -1,11 +1,4 @@
-enum AssistantState {
-  idle,
-  starting,
-  listening,
-  thinking,
-  speaking,
-  error,
-}
+enum AssistantState { idle, starting, listening, thinking, speaking, error }
 
 class ConversationMessage {
   final String text;

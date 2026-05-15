@@ -16,19 +16,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnboardingData> _pages = [
     OnboardingData(
       title: 'AI Plant Diagnosis',
-      description: 'Instantly identify plant diseases with our advanced AI scanning technology.',
+      description:
+          'Instantly identify plant diseases with our advanced AI scanning technology.',
       image: 'assets/onboarding_1.png',
       accentColor: Colors.greenAccent,
     ),
     OnboardingData(
       title: 'Expert Insights',
-      description: 'Get detailed reports on severity, symptoms, and professional treatment steps.',
+      description:
+          'Get detailed reports on severity, symptoms, and professional treatment steps.',
       image: 'assets/onboarding_2.png',
       accentColor: Colors.lightGreenAccent,
     ),
     OnboardingData(
       title: 'Voice Assistant',
-      description: 'Manage your crops hands-free with our intelligent agricultural voice assistant.',
+      description:
+          'Manage your crops hands-free with our intelligent agricultural voice assistant.',
       image: 'assets/onboarding_3.png',
       accentColor: Colors.cyanAccent,
     ),
@@ -39,7 +42,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await prefs.setBool('is_first_time', false);
     if (mounted) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const PlantDiseasesPredictionScreen()),
+        MaterialPageRoute(
+          builder: (_) => const PlantDiseasesPredictionScreen(),
+        ),
       );
     }
   }
@@ -47,7 +52,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D2310), // Matching splash screen deep green
+      backgroundColor: const Color(
+        0xFF0D2310,
+      ), // Matching splash screen deep green
       body: Stack(
         children: [
           // Background Gradient
@@ -66,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ),
             ),
           ),
-          
+
           PageView.builder(
             controller: _pageController,
             onPageChanged: (index) => setState(() => _currentPage = index),
@@ -75,7 +82,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               return OnboardingPageContent(data: _pages[index]);
             },
           ),
-          
+
           // Navigation Controls
           Positioned(
             bottom: 50,
@@ -94,46 +101,52 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       height: 8,
                       width: _currentPage == index ? 24 : 8,
                       decoration: BoxDecoration(
-                        color: _currentPage == index 
-                          ? _pages[_currentPage].accentColor 
-                          : Colors.white.withOpacity(0.2),
+                        color: _currentPage == index
+                            ? _pages[_currentPage].accentColor
+                            : Colors.white.withOpacity(0.2),
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
                   ),
                 ),
-                
+
                 // Button
                 _currentPage == _pages.length - 1
-                  ? ElevatedButton(
-                      onPressed: _completeOnboarding,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: _pages[_currentPage].accentColor,
-                        foregroundColor: Colors.black,
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                    ? ElevatedButton(
+                        onPressed: _completeOnboarding,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: _pages[_currentPage].accentColor,
+                          foregroundColor: Colors.black,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 16,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 0,
                         ),
-                        elevation: 0,
+                        child: const Text(
+                          'GET STARTED',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1,
+                          ),
+                        ),
+                      )
+                    : IconButton(
+                        onPressed: () {
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          color: _pages[_currentPage].accentColor,
+                          size: 24,
+                        ),
                       ),
-                      child: const Text(
-                        'GET STARTED',
-                        style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1),
-                      ),
-                    )
-                  : IconButton(
-                      onPressed: () {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: _pages[_currentPage].accentColor,
-                        size: 24,
-                      ),
-                    ),
               ],
             ),
           ),
@@ -170,10 +183,7 @@ class OnboardingPageContent extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),
-              child: Image.asset(
-                data.image,
-                fit: BoxFit.cover,
-              ),
+              child: Image.asset(data.image, fit: BoxFit.cover),
             ),
           ),
           const SizedBox(height: 60),

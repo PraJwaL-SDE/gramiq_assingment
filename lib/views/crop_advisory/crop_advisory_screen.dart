@@ -7,7 +7,10 @@ class CropAdvisoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Crop Advisory Screen', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(
+          'Crop Advisory Screen',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

@@ -31,12 +31,12 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
               children: [
                 // Header / Scan Button Area
                 _buildHeader(context, viewModel),
-                
+
                 // History List
                 Expanded(
-                  child: viewModel.isLoading 
-                    ? const Center(child: CircularProgressIndicator())
-                    : _buildHistoryList(context, viewModel),
+                  child: viewModel.isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : _buildHistoryList(context, viewModel),
                 ),
               ],
             ),
@@ -44,7 +44,9 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const VoiceAssistantScreen()),
+                  MaterialPageRoute(
+                    builder: (context) => const VoiceAssistantScreen(),
+                  ),
                 );
               },
               backgroundColor: Colors.white,
@@ -64,7 +66,10 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context, PlantPredictionViewModel viewModel) {
+  Widget _buildHeader(
+    BuildContext context,
+    PlantPredictionViewModel viewModel,
+  ) {
     return Container(
       padding: const EdgeInsets.all(24.0),
       decoration: const BoxDecoration(
@@ -80,7 +85,11 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
           const SizedBox(height: 16),
           const Text(
             'Identify Plant Diseases',
-            style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           const SizedBox(height: 8),
           const Text(
@@ -90,42 +99,48 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           ElevatedButton.icon(
-            onPressed: viewModel.isLoading ? null : () async {
-              final file = await viewModel.pickImage();
-              if (file != null && context.mounted) {
-                // Show guidelines before proceeding
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ImageGuidelinesView(
-                      imageFile: file,
-                      onContinue: () {
-                        Navigator.pop(context); // Go back from guidelines
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => PlantInfoCollectionScreen(imageFile: file),
+            onPressed: viewModel.isLoading
+                ? null
+                : () async {
+                    final file = await viewModel.pickImage();
+                    if (file != null && context.mounted) {
+                      // Show guidelines before proceeding
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ImageGuidelinesView(
+                            imageFile: file,
+                            onContinue: () {
+                              Navigator.pop(context); // Go back from guidelines
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => PlantInfoCollectionScreen(
+                                    imageFile: file,
+                                  ),
+                                ),
+                              ).then((_) {
+                                // Refresh history when returning from prediction
+                                viewModel.loadHistory();
+                              });
+                            },
+                            onRetake: () async {
+                              Navigator.pop(context); // Go back to main screen
+                            },
                           ),
-                        ).then((_) {
-                          // Refresh history when returning from prediction
-                          viewModel.loadHistory();
-                        });
-                      },
-                      onRetake: () async {
-                        Navigator.pop(context); // Go back to main screen
-                      },
-                    ),
-                  ),
-                );
-              }
-            },
+                        ),
+                      );
+                    }
+                  },
             icon: const Icon(Icons.camera_alt),
             label: const Text('SCAN PLANT'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.white,
               foregroundColor: const Color(0xFF2E7D32),
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
               elevation: 4,
             ),
           ),
@@ -134,7 +149,10 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHistoryList(BuildContext context, PlantPredictionViewModel viewModel) {
+  Widget _buildHistoryList(
+    BuildContext context,
+    PlantPredictionViewModel viewModel,
+  ) {
     if (viewModel.history.isEmpty) {
       return Center(
         child: Column(
@@ -142,7 +160,10 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
           children: [
             Icon(Icons.history_rounded, size: 64, color: Colors.grey.shade400),
             const SizedBox(height: 16),
-            Text('No scan history yet', style: TextStyle(color: Colors.grey.shade600)),
+            Text(
+              'No scan history yet',
+              style: TextStyle(color: Colors.grey.shade600),
+            ),
           ],
         ),
       );
@@ -155,7 +176,11 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
           padding: EdgeInsets.fromLTRB(20, 24, 20, 12),
           child: Text(
             'Recent Scans',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF1B5E20)),
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF1B5E20),
+            ),
           ),
         ),
         Expanded(
@@ -168,7 +193,10 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
                 item: item,
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => PlantPredictionDetailsScreen(prediction: item)),
+                  MaterialPageRoute(
+                    builder: (_) =>
+                        PlantPredictionDetailsScreen(prediction: item),
+                  ),
                 ),
                 onDelete: () {
                   showDialog(
@@ -176,19 +204,32 @@ class PlantDiseasesPredictionScreen extends StatelessWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text('Delete Scan'),
-                        content: const Text('Are you sure you want to delete this scan from your history?'),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                        content: const Text(
+                          'Are you sure you want to delete this scan from your history?',
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: const Text('CANCEL', style: TextStyle(color: Colors.grey)),
+                            child: const Text(
+                              'CANCEL',
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
                               viewModel.deleteFromHistory(index);
                               Navigator.pop(context);
                             },
-                            child: const Text('DELETE', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                            child: const Text(
+                              'DELETE',
+                              style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ],
                       );

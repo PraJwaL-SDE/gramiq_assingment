@@ -120,11 +120,15 @@ class HomeScreen extends StatelessWidget {
                           builder: (BuildContext context) {
                             return Container(
                               width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 5.0,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/banner$i.png'),
+                                  image: AssetImage(
+                                    'assets/images/banner$i.png',
+                                  ),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -147,7 +151,8 @@ class HomeScreen extends StatelessWidget {
                                     bottom: 20,
                                     left: 20,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           'AI ची ताकत आता प्रत्येक शेतकऱ्याच्या हातात!',
@@ -184,7 +189,12 @@ class HomeScreen extends StatelessWidget {
               right: 20,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const VoiceAssistantScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const VoiceAssistantScreen(),
+                    ),
+                  );
                 },
                 child: Container(
                   width: 60,
@@ -266,9 +276,11 @@ class HomeScreen extends StatelessWidget {
           child: const Icon(Icons.add, color: Colors.white, size: 40),
         ),
         const SizedBox(height: 8),
-        const Text('Add', style: TextStyle(color: Colors.transparent)), // Just for alignment
+        const Text(
+          'Add',
+          style: TextStyle(color: Colors.transparent),
+        ), // Just for alignment
       ],
     );
   }
 }
-

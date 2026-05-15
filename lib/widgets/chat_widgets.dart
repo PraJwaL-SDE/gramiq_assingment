@@ -46,21 +46,22 @@ class ChatMessageBubble extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
-        mainAxisAlignment:
-            isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isUser
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         children: [
-          if (!isUser) ...[
-            ChatAvatar(isUser: false),
-            const SizedBox(width: 8),
-          ],
+          if (!isUser) ...[ChatAvatar(isUser: false), const SizedBox(width: 8)],
           Flexible(
             child: Column(
-              crossAxisAlignment:
-                  isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+              crossAxisAlignment: isUser
+                  ? CrossAxisAlignment.end
+                  : CrossAxisAlignment.start,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 10),
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   decoration: BoxDecoration(
                     color: isUser
                         ? const Color(0xFF1F6FEB)
@@ -73,15 +74,16 @@ class ChatMessageBubble extends StatelessWidget {
                     ),
                     border: isPartial
                         ? Border.all(
-                            color: const Color(0xFF58A6FF).withValues(alpha: 0.5))
+                            color: const Color(
+                              0xFF58A6FF,
+                            ).withValues(alpha: 0.5),
+                          )
                         : null,
                   ),
                   child: Text(
                     text,
                     style: TextStyle(
-                      color: isPartial
-                          ? Colors.white60
-                          : Colors.white,
+                      color: isPartial ? Colors.white60 : Colors.white,
                       fontSize: 15,
                       height: 1.4,
                       fontStyle: isPartial
@@ -104,10 +106,7 @@ class ChatMessageBubble extends StatelessWidget {
               ],
             ),
           ),
-          if (isUser) ...[
-            const SizedBox(width: 8),
-            ChatAvatar(isUser: true),
-          ],
+          if (isUser) ...[const SizedBox(width: 8), ChatAvatar(isUser: true)],
         ],
       ),
     );

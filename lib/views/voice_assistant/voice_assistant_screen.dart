@@ -73,10 +73,7 @@ class _VoiceAssistantScreenState extends State<VoiceAssistantScreen>
                   scrollController: _scrollController,
                 ),
               ),
-              _MicArea(
-                viewModel: viewModel,
-                pulseAnimation: _pulseAnimation,
-              ),
+              _MicArea(viewModel: viewModel, pulseAnimation: _pulseAnimation),
             ],
           ),
         );
@@ -99,7 +96,11 @@ class _VoiceAssistantScreenState extends State<VoiceAssistantScreen>
               ),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(Icons.record_voice_over, color: Colors.white, size: 20),
+            child: const Icon(
+              Icons.record_voice_over,
+              color: Colors.white,
+              size: 20,
+            ),
           ),
           const SizedBox(width: 12),
           const Column(
@@ -213,10 +214,7 @@ class _MicArea extends StatelessWidget {
   final VoiceAssistantViewModel viewModel;
   final Animation<double> pulseAnimation;
 
-  const _MicArea({
-    required this.viewModel,
-    required this.pulseAnimation,
-  });
+  const _MicArea({required this.viewModel, required this.pulseAnimation});
 
   @override
   Widget build(BuildContext context) {
@@ -236,8 +234,8 @@ class _MicArea extends StatelessWidget {
             isListening
                 ? 'बोला...'
                 : isBusy
-                    ? 'थांबा...'
-                    : 'मायक्रोफोन बटण दाबा',
+                ? 'थांबा...'
+                : 'मायक्रोफोन बटण दाबा',
             style: const TextStyle(color: Color(0xFF8B949E), fontSize: 13),
           ),
           const SizedBox(height: 16),
@@ -261,19 +259,21 @@ class _MicArea extends StatelessWidget {
                           colors: [Color(0xFF30363D), Color(0xFF21262D)],
                         )
                       : isListening
-                          ? const LinearGradient(
-                              colors: [Color(0xFF58A6FF), Color(0xFF1F6FEB)],
-                            )
-                          : const LinearGradient(
-                              colors: [Color(0xFFFF6B35), Color(0xFFFFB347)],
-                            ),
+                      ? const LinearGradient(
+                          colors: [Color(0xFF58A6FF), Color(0xFF1F6FEB)],
+                        )
+                      : const LinearGradient(
+                          colors: [Color(0xFFFF6B35), Color(0xFFFFB347)],
+                        ),
                   boxShadow: isListening
                       ? [
                           BoxShadow(
-                            color: const Color(0xFF58A6FF).withValues(alpha: 0.4),
+                            color: const Color(
+                              0xFF58A6FF,
+                            ).withValues(alpha: 0.4),
                             blurRadius: 20,
                             spreadRadius: 5,
-                          )
+                          ),
                         ]
                       : [],
                 ),
@@ -281,10 +281,10 @@ class _MicArea extends StatelessWidget {
                   isListening
                       ? Icons.mic
                       : viewModel.isSpeaking
-                          ? Icons.volume_up
-                          : viewModel.isThinking
-                              ? Icons.hourglass_top
-                              : Icons.mic_none,
+                      ? Icons.volume_up
+                      : viewModel.isThinking
+                      ? Icons.hourglass_top
+                      : Icons.mic_none,
                   color: Colors.white,
                   size: 32,
                 ),
@@ -295,10 +295,15 @@ class _MicArea extends StatelessWidget {
           if (isBusy)
             TextButton.icon(
               onPressed: viewModel.stopSession,
-              icon: const Icon(Icons.stop_circle_outlined,
-                  color: Color(0xFFF85149), size: 18),
-              label: const Text('थांबवा',
-                  style: TextStyle(color: Color(0xFFF85149))),
+              icon: const Icon(
+                Icons.stop_circle_outlined,
+                color: Color(0xFFF85149),
+                size: 18,
+              ),
+              label: const Text(
+                'थांबवा',
+                style: TextStyle(color: Color(0xFFF85149)),
+              ),
             ),
         ],
       ),

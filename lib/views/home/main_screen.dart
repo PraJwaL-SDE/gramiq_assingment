@@ -39,7 +39,8 @@ class _MainScreenState extends State<MainScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Image.network(
             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6uR4K8yR2V7N1_vS3Lh_V3R3vB8V_vR8V_A&s', // Placeholder logo
-            errorBuilder: (context, error, stackTrace) => const Icon(Icons.agriculture, color: Colors.white),
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.agriculture, color: Colors.white),
           ),
         ),
         title: const Text(
@@ -53,10 +54,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _screens,
-      ),
+      body: IndexedStack(index: _selectedIndex, children: _screens),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8.0,
@@ -90,10 +88,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(
-            icon,
-            color: isSelected ? const Color(0xFF3F3D89) : Colors.grey,
-          ),
+          Icon(icon, color: isSelected ? const Color(0xFF3F3D89) : Colors.grey),
           Text(
             label,
             style: TextStyle(

@@ -44,10 +44,7 @@ class ImageGuidelinesView extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
-                child: Image.file(
-                  imageFile,
-                  fit: BoxFit.cover,
-                ),
+                child: Image.file(imageFile, fit: BoxFit.cover),
               ),
             ),
           ),
@@ -103,13 +100,21 @@ class ImageGuidelinesView extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: onRetake,
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Color(0xFF2E7D32), width: 2),
+                      side: const BorderSide(
+                        color: Color(0xFF2E7D32),
+                        width: 2,
+                      ),
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                     ),
                     child: const Text(
                       'RETAKE',
-                      style: TextStyle(color: Color(0xFF2E7D32), fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: Color(0xFF2E7D32),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
@@ -121,7 +126,9 @@ class ImageGuidelinesView extends StatelessWidget {
                       backgroundColor: const Color(0xFF2E7D32),
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       elevation: 0,
                     ),
                     child: const Text(
@@ -168,10 +175,7 @@ class ImageGuidelinesView extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   description,
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
                 ),
               ],
             ),

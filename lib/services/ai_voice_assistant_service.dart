@@ -122,11 +122,7 @@ class AiVoiceAssistantService {
     dev.log('[AVA] ▶ start()');
 
     try {
-      await Future.wait([
-        _initGemini(),
-        _initStt(),
-        _initTts(),
-      ]);
+      await Future.wait([_initGemini(), _initStt(), _initTts()]);
 
       _isInitialized = true;
       dev.log('[AVA] ✅ All subsystems ready');
@@ -167,7 +163,8 @@ class AiVoiceAssistantService {
       onError: (error) {
         dev.log('[AVA] STT error: ${error.errorMsg}');
         _isListening = false;
-        if (!completer.isCompleted) completer.complete(buffer.toString().trim());
+        if (!completer.isCompleted)
+          completer.complete(buffer.toString().trim());
       },
       onStatus: (status) {
         dev.log('[AVA] STT status: $status');
@@ -377,9 +374,9 @@ class AiVoiceAssistantService {
   static void clearHistory() {
     _conversationHistory.clear();
     // Re-create chat session to reset Gemini turn history
-    _chatSession = _geminiModel.startChat(history: [
-      Content.text(_marathiSystemPrompt),
-    ]);
+    _chatSession = _geminiModel.startChat(
+      history: [Content.text(_marathiSystemPrompt)],
+    );
     dev.log('[AVA] 🗑 History cleared');
   }
 
@@ -403,10 +400,8 @@ class AiVoiceAssistantService {
       safetySettings: [
         SafetySetting(HarmCategory.harassment, HarmBlockThreshold.medium),
         SafetySetting(HarmCategory.hateSpeech, HarmBlockThreshold.medium),
-        SafetySetting(
-            HarmCategory.sexuallyExplicit, HarmBlockThreshold.medium),
-        SafetySetting(
-            HarmCategory.dangerousContent, HarmBlockThreshold.medium),
+        SafetySetting(HarmCategory.sexuallyExplicit, HarmBlockThreshold.medium),
+        SafetySetting(HarmCategory.dangerousContent, HarmBlockThreshold.medium),
       ],
       systemInstruction: Content.text(_marathiSystemPrompt),
     );
@@ -476,7 +471,8 @@ class AiVoiceAssistantService {
     // Append today's date so AI can answer "today" questions
     final now = DateTime.now();
     buffer.write(
-        '\n[आज: ${now.day}/${now.month}/${now.year}, वेळ: ${now.hour}:${now.minute.toString().padLeft(2, '0')}]');
+      '\n[आज: ${now.day}/${now.month}/${now.year}, वेळ: ${now.hour}:${now.minute.toString().padLeft(2, '0')}]',
+    );
 
     return buffer.toString();
   }
@@ -484,7 +480,8 @@ class AiVoiceAssistantService {
   static void _assertInitialised(String method) {
     if (!_isInitialized) {
       throw StateError(
-          '[AVA] $method() called before start(). Call start() first.');
+        '[AVA] $method() called before start(). Call start() first.',
+      );
     }
   }
 

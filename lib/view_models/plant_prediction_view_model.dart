@@ -24,7 +24,9 @@ class PlantPredictionViewModel extends BaseViewModel {
     if (historyJson != null) {
       final List<dynamic> decoded = jsonDecode(historyJson);
       _history.clear();
-      _history.addAll(decoded.map((item) => PlantPrediction.fromJson(item)).toList());
+      _history.addAll(
+        decoded.map((item) => PlantPrediction.fromJson(item)).toList(),
+      );
       _history.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     }
     setLoading(false);
@@ -32,7 +34,9 @@ class PlantPredictionViewModel extends BaseViewModel {
 
   Future<void> saveHistory() async {
     final prefs = await SharedPreferences.getInstance();
-    final String historyJson = jsonEncode(_history.map((item) => item.toJson()).toList());
+    final String historyJson = jsonEncode(
+      _history.map((item) => item.toJson()).toList(),
+    );
     await prefs.setString('plant_prediction_history', historyJson);
   }
 
@@ -59,9 +63,9 @@ class PlantPredictionViewModel extends BaseViewModel {
       );
 
       if (result.containsKey('error')) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(result['error'])),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(result['error'])));
         return null;
       }
 
@@ -78,12 +82,12 @@ class PlantPredictionViewModel extends BaseViewModel {
       _history.insert(0, prediction);
       await saveHistory();
       notifyListeners();
-      
+
       return result;
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error: $e')));
       return null;
     } finally {
       setLoading(false);

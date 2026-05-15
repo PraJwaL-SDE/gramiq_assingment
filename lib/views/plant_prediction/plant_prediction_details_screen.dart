@@ -32,7 +32,7 @@ class PlantPredictionDetailsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            
+
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -53,7 +53,10 @@ class PlantPredictionDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.green.shade100,
                           borderRadius: BorderRadius.circular(20),
@@ -69,26 +72,29 @@ class PlantPredictionDetailsScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
-                  
+
                   // Severity Badge
-                  _buildBadge('Severity: ${prediction.severity}', _getSeverityColor(prediction.severity)),
-                  
+                  _buildBadge(
+                    'Severity: ${prediction.severity}',
+                    _getSeverityColor(prediction.severity),
+                  ),
+
                   const SizedBox(height: 24),
-                  
+
                   // Symptoms
                   _buildSectionTitle('Symptoms Observed'),
                   const SizedBox(height: 8),
                   ...prediction.symptoms.map((s) => _buildBulletPoint(s)),
-                  
+
                   const SizedBox(height: 24),
-                  
+
                   // Treatment
                   _buildSectionTitle('Recommended Treatment'),
                   const SizedBox(height: 8),
                   ...prediction.treatment.map((t) => _buildBulletPoint(t)),
-                  
+
                   const SizedBox(height: 40),
-                  
+
                   // Disclaimer
                   Container(
                     padding: const EdgeInsets.all(16),
@@ -99,12 +105,18 @@ class PlantPredictionDetailsScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.warning_amber_rounded, color: Colors.amber.shade800),
+                        Icon(
+                          Icons.warning_amber_rounded,
+                          color: Colors.amber.shade800,
+                        ),
                         const SizedBox(width: 12),
                         const Expanded(
                           child: Text(
                             'Note: AI predictions should be verified by a local agriculture expert before taking major actions.',
-                            style: TextStyle(fontSize: 12, color: Colors.black87),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ],
@@ -141,7 +153,12 @@ class PlantPredictionDetailsScreen extends StatelessWidget {
             child: Icon(Icons.circle, size: 6, color: Colors.green),
           ),
           const SizedBox(width: 12),
-          Expanded(child: Text(text, style: const TextStyle(fontSize: 15, height: 1.4))),
+          Expanded(
+            child: Text(
+              text,
+              style: const TextStyle(fontSize: 15, height: 1.4),
+            ),
+          ),
         ],
       ),
     );
@@ -157,18 +174,27 @@ class PlantPredictionDetailsScreen extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w600),
+        style: TextStyle(
+          color: color,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     );
   }
 
   Color _getSeverityColor(String severity) {
     switch (severity.toLowerCase()) {
-      case 'low': return Colors.blue;
-      case 'moderate': return Colors.orange;
-      case 'high': return Colors.red;
-      case 'critical': return Colors.red.shade900;
-      default: return Colors.grey;
+      case 'low':
+        return Colors.blue;
+      case 'moderate':
+        return Colors.orange;
+      case 'high':
+        return Colors.red;
+      case 'critical':
+        return Colors.red.shade900;
+      default:
+        return Colors.grey;
     }
   }
 }

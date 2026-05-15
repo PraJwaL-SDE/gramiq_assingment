@@ -7,7 +7,10 @@ class MandiPriceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Mandi Price Screen', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(
+          'Mandi Price Screen',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

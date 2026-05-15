@@ -17,12 +17,16 @@ class AiPlantDiseasePredictionService {
     DateTime imageDateTime,
     Map<String, dynamic> extraContext,
   ) async {
-    print('DEBUG: [AiPlantDiseasePredictionService] Starting predictDisease for plant: $plantName');
+    print(
+      'DEBUG: [AiPlantDiseasePredictionService] Starting predictDisease for plant: $plantName',
+    );
     try {
       final imageBytes = await image.readAsBytes();
       final base64Image = base64Encode(imageBytes);
       final mimeType = _detectMimeType(image.path);
-      print('DEBUG: [AiPlantDiseasePredictionService] Image encoded. MIME type: $mimeType');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] Image encoded. MIME type: $mimeType',
+      );
 
       final prompt = _buildPrompt(
         plantName: plantName,
@@ -31,7 +35,9 @@ class AiPlantDiseasePredictionService {
         imageDateTime: imageDateTime,
         extraContext: extraContext,
       );
-      print('DEBUG: [AiPlantDiseasePredictionService] Contextual prompt built.');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] Contextual prompt built.',
+      );
 
       final requestBody = {
         'contents': [
@@ -39,10 +45,7 @@ class AiPlantDiseasePredictionService {
             'parts': [
               {'text': prompt},
               {
-                'inline_data': {
-                  'mime_type': mimeType,
-                  'data': base64Image,
-                },
+                'inline_data': {'mime_type': mimeType, 'data': base64Image},
               },
             ],
           },
@@ -55,19 +58,15 @@ class AiPlantDiseasePredictionService {
           'responseMimeType': 'application/json',
         },
         'safetySettings': [
-          {
-            'category': 'HARM_CATEGORY_HARASSMENT',
-            'threshold': 'BLOCK_NONE',
-          },
-          {
-            'category': 'HARM_CATEGORY_HATE_SPEECH',
-            'threshold': 'BLOCK_NONE',
-          },
+          {'category': 'HARM_CATEGORY_HARASSMENT', 'threshold': 'BLOCK_NONE'},
+          {'category': 'HARM_CATEGORY_HATE_SPEECH', 'threshold': 'BLOCK_NONE'},
         ],
       };
 
       final uri = Uri.parse('$_baseUrl?key=$_geminiApiKey');
-      print('DEBUG: [AiPlantDiseasePredictionService] Sending POST request to Gemini API...');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] Sending POST request to Gemini API...',
+      );
       final response = await http
           .post(
             uri,
@@ -75,19 +74,30 @@ class AiPlantDiseasePredictionService {
             body: jsonEncode(requestBody),
           )
           .timeout(const Duration(seconds: 30));
-      print('DEBUG: [AiPlantDiseasePredictionService] Response received. Status code: ${response.statusCode}');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] Response received. Status code: ${response.statusCode}',
+      );
       try {
-        final prettyJson = const JsonEncoder.withIndent('  ').convert(jsonDecode(response.body));
-        print('DEBUG: [AiPlantDiseasePredictionService] Raw API Response Body:\n$prettyJson');
+        final prettyJson = const JsonEncoder.withIndent(
+          '  ',
+        ).convert(jsonDecode(response.body));
+        print(
+          'DEBUG: [AiPlantDiseasePredictionService] Raw API Response Body:\n$prettyJson',
+        );
       } catch (_) {
-        print('DEBUG: [AiPlantDiseasePredictionService] Raw API Response Body: ${response.body}');
+        print(
+          'DEBUG: [AiPlantDiseasePredictionService] Raw API Response Body: ${response.body}',
+        );
       }
 
       if (response.statusCode != 200) {
         final errorBody = jsonDecode(response.body);
-        print('DEBUG: [AiPlantDiseasePredictionService] Gemini API error: ${response.body}');
+        print(
+          'DEBUG: [AiPlantDiseasePredictionService] Gemini API error: ${response.body}',
+        );
         return {
-          'error': 'Gemini API error ${response.statusCode}: '
+          'error':
+              'Gemini API error ${response.statusCode}: '
               '${errorBody['error']?['message'] ?? 'Unknown error'}',
         };
       }
@@ -108,22 +118,32 @@ class AiPlantDiseasePredictionService {
 
       if (candidates.isNotEmpty) {
         final finishReason = candidates[0]['finishReason'];
-        print('DEBUG: [AiPlantDiseasePredictionService] Finish Reason: $finishReason');
+        print(
+          'DEBUG: [AiPlantDiseasePredictionService] Finish Reason: $finishReason',
+        );
       }
 
       final rawText = parts[0]['text'] as String? ?? '';
 
       final result = _parseModelResponse(rawText);
-      print('DEBUG: [AiPlantDiseasePredictionService] predictDisease completed successfully.');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] predictDisease completed successfully.',
+      );
       return result;
     } on SocketException {
-      print('DEBUG: [AiPlantDiseasePredictionService] SocketException: No internet.');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] SocketException: No internet.',
+      );
       return {'error': 'No internet connection. Please check your network.'};
     } on HttpException catch (e) {
-      print('DEBUG: [AiPlantDiseasePredictionService] HttpException: ${e.message}');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] HttpException: ${e.message}',
+      );
       return {'error': 'HTTP error: ${e.message}'};
     } on FormatException catch (e) {
-      print('DEBUG: [AiPlantDiseasePredictionService] FormatException: ${e.message}');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] FormatException: ${e.message}',
+      );
       return {'error': 'Failed to parse API response: ${e.message}'};
     } catch (e) {
       print('DEBUG: [AiPlantDiseasePredictionService] Unexpected error: $e');
@@ -138,7 +158,9 @@ class AiPlantDiseasePredictionService {
     required DateTime imageDateTime,
     required Map<String, dynamic> extraContext,
   }) {
-    print('DEBUG: [AiPlantDiseasePredictionService] Building prompt for $plantName...');
+    print(
+      'DEBUG: [AiPlantDiseasePredictionService] Building prompt for $plantName...',
+    );
     final formattedDate =
         '${imageDateTime.year}-${_pad(imageDateTime.month)}-${_pad(imageDateTime.day)} '
         '${_pad(imageDateTime.hour)}:${_pad(imageDateTime.minute)}';
@@ -193,40 +215,50 @@ $contextString
   }
 
   static Map<String, dynamic> _parseModelResponse(String rawText) {
-    print('DEBUG: [AiPlantDiseasePredictionService] Parsing model response text (length: ${rawText.length})');
-    print('DEBUG: [AiPlantDiseasePredictionService] Raw Text to Parse: $rawText');
-    
+    print(
+      'DEBUG: [AiPlantDiseasePredictionService] Parsing model response text (length: ${rawText.length})',
+    );
+    print(
+      'DEBUG: [AiPlantDiseasePredictionService] Raw Text to Parse: $rawText',
+    );
+
     var cleaned = rawText.trim();
-    
+
     if (cleaned.contains('```')) {
-      final match = RegExp(r'```(?:json)?\s*([\s\S]*?)\s*```').firstMatch(cleaned);
+      final match = RegExp(
+        r'```(?:json)?\s*([\s\S]*?)\s*```',
+      ).firstMatch(cleaned);
       if (match != null) {
         cleaned = match.group(1) ?? cleaned;
       } else {
         cleaned = cleaned.replaceAll(RegExp(r'^```(?:json)?|```$'), '').trim();
       }
     }
-    
-    cleaned = cleaned.replaceAllMapped(RegExp(r',\s*([\}\]])'), (m) => m.group(1)!);
+
+    cleaned = cleaned.replaceAllMapped(
+      RegExp(r',\s*([\}\]])'),
+      (m) => m.group(1)!,
+    );
 
     try {
       final parsed = jsonDecode(cleaned) as Map<String, dynamic>;
       if (parsed['confidence'] is String) {
         parsed['confidence'] = double.tryParse(parsed['confidence']) ?? 0.0;
       }
-      print('DEBUG: [AiPlantDiseasePredictionService] JSON parsed successfully.');
+      print(
+        'DEBUG: [AiPlantDiseasePredictionService] JSON parsed successfully.',
+      );
       return parsed;
     } catch (e) {
       print('DEBUG: [AiPlantDiseasePredictionService] JSON Parse Error: $e');
-      return {
-        'error': 'Model returned invalid JSON.',
-        'raw_response': rawText,
-      };
+      return {'error': 'Model returned invalid JSON.', 'raw_response': rawText};
     }
   }
 
   static String _detectMimeType(String path) {
-    print('DEBUG: [AiPlantDiseasePredictionService] Detecting MIME type for: $path');
+    print(
+      'DEBUG: [AiPlantDiseasePredictionService] Detecting MIME type for: $path',
+    );
     final ext = path.split('.').last.toLowerCase();
     switch (ext) {
       case 'jpg':

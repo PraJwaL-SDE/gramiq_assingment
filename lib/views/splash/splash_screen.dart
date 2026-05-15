@@ -11,7 +11,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
@@ -49,10 +50,13 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
           Navigator.of(context).pushReplacement(
             PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
-                  isFirstTime ? const OnboardingScreen() : const PlantDiseasesPredictionScreen(),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                return FadeTransition(opacity: animation, child: child);
-              },
+                  isFirstTime
+                  ? const OnboardingScreen()
+                  : const PlantDiseasesPredictionScreen(),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return FadeTransition(opacity: animation, child: child);
+                  },
               transitionDuration: const Duration(milliseconds: 800),
             ),
           );
@@ -163,7 +167,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                         height: 2,
                         child: LinearProgressIndicator(
                           backgroundColor: Colors.white.withOpacity(0.1),
-                          valueColor: const AlwaysStoppedAnimation<Color>(Colors.greenAccent),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            Colors.greenAccent,
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),

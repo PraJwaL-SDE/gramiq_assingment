@@ -18,16 +18,17 @@ class PlantPrediction {
   });
 
   Map<String, dynamic> toJson() => {
-        'disease_name': diseaseName,
-        'confidence': confidence,
-        'severity': severity,
-        'symptoms': symptoms,
-        'treatment': treatment,
-        'image_path': imagePath,
-        'date_time': dateTime.toIso8601String(),
-      };
+    'disease_name': diseaseName,
+    'confidence': confidence,
+    'severity': severity,
+    'symptoms': symptoms,
+    'treatment': treatment,
+    'image_path': imagePath,
+    'date_time': dateTime.toIso8601String(),
+  };
 
-  factory PlantPrediction.fromJson(Map<String, dynamic> json) => PlantPrediction(
+  factory PlantPrediction.fromJson(Map<String, dynamic> json) =>
+      PlantPrediction(
         diseaseName: json['disease_name'],
         confidence: json['confidence'].toDouble(),
         severity: json['severity'],

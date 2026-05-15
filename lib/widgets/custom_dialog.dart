@@ -78,7 +78,10 @@ class CustomDialog extends StatelessWidget {
             onPressed: onCancel ?? () => Navigator.pop(context),
             child: Text(
               cancelText!,
-              style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         if (confirmText != null)
@@ -87,7 +90,9 @@ class CustomDialog extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
             child: Text(confirmText!),
           ),

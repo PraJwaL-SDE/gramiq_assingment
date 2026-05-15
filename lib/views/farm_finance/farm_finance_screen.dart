@@ -7,7 +7,10 @@ class FarmFinanceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Farm Finance Screen', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+        child: Text(
+          'Farm Finance Screen',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

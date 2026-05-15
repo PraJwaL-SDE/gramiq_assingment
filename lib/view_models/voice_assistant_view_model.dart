@@ -58,8 +58,10 @@ class VoiceAssistantViewModel extends BaseViewModel {
       await AiVoiceAssistantService.start();
       _sessionActive = true;
 
-      final greeting = AiVoiceAssistantService.conversationHistory
-          .lastWhere((m) => m['role'] == 'assistant', orElse: () => {})['content'];
+      final greeting = AiVoiceAssistantService.conversationHistory.lastWhere(
+        (m) => m['role'] == 'assistant',
+        orElse: () => {},
+      )['content'];
 
       if (greeting != null && greeting.isNotEmpty) {
         _addMessage(greeting, isUser: false);
@@ -112,11 +114,13 @@ class VoiceAssistantViewModel extends BaseViewModel {
   }
 
   void _addMessage(String text, {required bool isUser}) {
-    _messages.add(ConversationMessage(
-      text: text,
-      isUser: isUser,
-      timestamp: DateTime.now(),
-    ));
+    _messages.add(
+      ConversationMessage(
+        text: text,
+        isUser: isUser,
+        timestamp: DateTime.now(),
+      ),
+    );
     notifyListeners();
   }
 
